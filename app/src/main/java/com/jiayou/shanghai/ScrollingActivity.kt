@@ -1,13 +1,14 @@
 package com.jiayou.shanghai
 
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.jiayou.shanghai.databinding.ActivityScrollingBinding
-import java.lang.Exception
+
 
 class ScrollingActivity : AppCompatActivity() {
 
@@ -22,8 +23,19 @@ class ScrollingActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
         binding.fab.setOnClickListener { view ->
-            openAccessibility(view)
+            //openAccessibility(view)
+            openDingDong()
         }
+    }
+
+    private fun openDingDong() {
+        var intent = packageManager.getLaunchIntentForPackage("com.yaya.zone")
+        if (intent == null) {
+            intent = Intent(Intent.ACTION_MAIN)
+            intent.component =
+                ComponentName("com.yaya.zone", "com.yaya.zone.home.HomeActivity")
+        }
+        startActivity(intent)
     }
 
     fun openAccessibility(view: View?) {

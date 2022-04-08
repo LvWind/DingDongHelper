@@ -29,13 +29,20 @@ class DingDongService : AccessibilityService() {
                     chooseDeliveryTime(event)
                 }
                 GX0 -> {
-                    performGlobalAction(GLOBAL_ACTION_BACK)
+                    //performGlobalAction(GLOBAL_ACTION_BACK)
+                    clickRefreshBtn(event)
                 }
                 XN1 -> {
                     checkNotification(event)
                 }
                 RETURN_CART_DIALOG -> {
                     clickReturnCartBtn(event)
+                }
+                CROWDED -> {
+
+                }
+                TIME_INVALID -> {
+                    clickDeliveryTimeBtn(event)
                 }
                 else -> {
                     clickDialog(event)
@@ -58,6 +65,23 @@ class DingDongService : AccessibilityService() {
 
     private fun clickReturnCartBtn(event: AccessibilityEvent) {
         var nodes = event.source?.findAccessibilityNodeInfosByText("返回购物车")
+        nodes?.forEach { node ->
+            node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            Log.d(TAG, "clickDialog confirm")
+            return@forEach
+        }
+    }
+
+    private fun clickRefreshBtn(event: AccessibilityEvent) {
+        var nodes = event.source?.findAccessibilityNodeInfosByText("重新加载")
+        nodes?.forEach { node ->
+            node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            Log.d(TAG, "clickDialog confirm")
+            return@forEach
+        }
+    }
+    private fun clickDeliveryTimeBtn(event: AccessibilityEvent) {
+        var nodes = event.source?.findAccessibilityNodeInfosByText("选择送达时间")
         nodes?.forEach { node ->
             node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
             Log.d(TAG, "clickDialog confirm")
@@ -143,6 +167,8 @@ class DingDongService : AccessibilityService() {
         const val GX0 = "gx0"
         const val RETURN_CART_DIALOG = "by"
         const val XN1 = "xn1"
+        const val CROWDED = "vn1"
+        const val TIME_INVALID = "xv0"
         const val CHOOSE_DELIVERY_TIME_V2 = "iy"
     }
 }
